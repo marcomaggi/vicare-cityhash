@@ -12,6 +12,7 @@ prefix=/usr/local
     --disable-static --enable-shared            \
     --prefix="${prefix}"                        \
     CFLAGS='-Wall -O3 -march=i686 -mtune=i686'  \
+    CXXFLAGS='-Wall -O3 -march=i686 -mtune=i686'\
     "$@"
 
 ### end of file

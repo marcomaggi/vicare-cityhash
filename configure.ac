@@ -20,6 +20,10 @@ AM_INIT_AUTOMAKE([-Wall])
 AC_PROG_CC
 AC_PROG_CC_C_O
 
+AC_LANG([C++])
+AC_PROG_CXX
+AC_PROG_CXX_C_O
+
 AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
@@ -35,7 +39,7 @@ AC_CHECK_PROG([VICARE],[vicare],[vicare],[:])
 
 AC_CHECK_HEADERS([city.h],,
   [AC_MSG_FAILURE([missing city.h header],[2])])
-AC_CHECK_LIB([cityhash],[CityHash64],,
+AC_CHECK_LIB([cityhash],[main],,
   [AC_MSG_FAILURE([missing Cityhash library],[2])])
 
 vicare_cityhash_VERSION_INTERFACE_CURRENT=0

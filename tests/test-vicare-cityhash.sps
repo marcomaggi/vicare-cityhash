@@ -25,11 +25,9 @@
 ;;;
 
 
-#!r6rs
+#!vicare
 (import (vicare)
   (vicare cityhash)
-  (vicare cityhash constants)
-;;;  (prefix (vicare ffi) ffi.)
   (checks))
 
 (check-set-mode! 'report-failed)
@@ -57,6 +55,15 @@
   (check
       (string? (vicare-cityhash-version))
     => #t)
+
+  #t)
+
+
+(parametrise ((check-test-name	'hash))
+
+  (check
+      (CityHash64 #ve(ascii "ciao mamma"))
+    => 13369116979487659421)
 
   #t)
 

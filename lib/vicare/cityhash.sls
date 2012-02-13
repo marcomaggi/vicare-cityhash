@@ -1,7 +1,7 @@
 ;;; -*- coding: utf-8-unix -*-
 ;;;
-;;;Part of: Vicare/Template
-;;;Contents: Template binding backend
+;;;Part of: Vicare/CityHash
+;;;Contents: Cityhash binding backend
 ;;;Date: Sat Jan 21, 2012
 ;;;
 ;;;Abstract
@@ -26,21 +26,22 @@
 
 
 #!vicare
-#!(load-shared-library "vicare-template")
-(library (vicare template)
+#!(load-shared-library "vicare-cityhash")
+(library (vicare cityhash)
   (export
 
     ;; version numbers and strings
-    vicare-template-version-interface-current
-    vicare-template-version-interface-revision
-    vicare-template-version-interface-age
-    vicare-template-version
+    vicare-cityhash-version-interface-current
+    vicare-cityhash-version-interface-revision
+    vicare-cityhash-version-interface-age
+    vicare-cityhash-version
+
+    ;; hash functions
+    CityHash64
 
     )
   (import (vicare)
-    (vicare template constants)
-    (vicare syntactic-extensions)
-    #;(prefix (vicare words) words.))
+    (vicare syntactic-extensions))
 
 
 ;;;; arguments validation
@@ -57,7 +58,7 @@
   (ffi.pointer? obj)
   (assertion-violation who "expected callback as argument" obj))
 
-#;(define-argument-validation (bytevector who obj)
+(define-argument-validation (bytevector who obj)
   (bytevector? obj)
   (assertion-violation who "expected bytevector as argument" obj))
 
@@ -65,17 +66,29 @@
 
 ;;;; version functions
 
-(define-inline (vicare-template-version-interface-current)
-  (foreign-call "ikrt_template_version_interface_current"))
+(define-inline (vicare-cityhash-version-interface-current)
+  (foreign-call "ikrt_cityhash_version_interface_current"))
 
-(define-inline (vicare-template-version-interface-revision)
-  (foreign-call "ikrt_template_version_interface_revision"))
+(define-inline (vicare-cityhash-version-interface-revision)
+  (foreign-call "ikrt_cityhash_version_interface_revision"))
 
-(define-inline (vicare-template-version-interface-age)
-  (foreign-call "ikrt_template_version_interface_age"))
+(define-inline (vicare-cityhash-version-interface-age)
+  (foreign-call "ikrt_cityhash_version_interface_age"))
 
-(define-inline (vicare-template-version)
-  (ascii->string (foreign-call "ikrt_template_version")))
+(define-inline (vicare-cityhash-version)
+  (ascii->string (foreign-call "ikrt_cityhash_version")))
+
+
+;;;; hash functions
+
+(define-inline (capi.cityhash64 bv)
+  (foreign-call "ikrt_cityhash_cityhash64" bv))
+
+(define (CityHash64 bv)
+  (define who 'CityHash64)
+  (with-arguments-validation (who)
+      ((bytevector	bv))
+    (capi.cityhash64 bv)))
 
 
 ;;;; done

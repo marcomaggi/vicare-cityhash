@@ -5,7 +5,8 @@
 
   Abstract
 
-
+	This  file bridges  C++ from  CityHash with  C needed  by Vicare
+	extensions.
 
   Copyright (C) 2012 Marco Maggi <marco.maggi-ipsu@poste.it>
 
@@ -31,48 +32,18 @@
 #ifdef HAVE_CONFIG_H
 #  include <config.h>
 #endif
-#include <vicare.h>
 #include <internals.h>
-
-
-/** --------------------------------------------------------------------
- ** Version functions.
- ** ----------------------------------------------------------------- */
-
-ikptr
-ikrt_cityhash_version_interface_current (void)
-{
-  return IK_FIX(vicare_cityhash_VERSION_INTERFACE_CURRENT);
-}
-ikptr
-ikrt_cityhash_version_interface_revision (void)
-{
-  return IK_FIX(vicare_cityhash_VERSION_INTERFACE_REVISION);
-}
-ikptr
-ikrt_cityhash_version_interface_age (void)
-{
-  return IK_FIX(vicare_cityhash_VERSION_INTERFACE_AGE);
-}
-ikptr
-ikrt_cityhash_version (ikpcb * pcb)
-{
-  return ika_bytevector_from_cstring(pcb, vicare_cityhash_VERSION_INTERFACE_STRING);
-}
+#include <city.h>
 
 
 /** --------------------------------------------------------------------
  ** Hash functions.
  ** ----------------------------------------------------------------- */
 
-ikptr
-ikrt_cityhash_cityhash64 (ikptr s_bytevector, ikpcb * pcb)
+uint64_t
+cch_city_hash_64 (const char *buf, size_t len)
 {
-  char *	buf = IK_BYTEVECTOR_DATA_CHARP(s_bytevector);
-  size_t	len = IK_BYTEVECTOR_LENGTH(s_bytevector);
-  uint64_t	rv;
-  rv = cch_city_hash_64(buf, len);
-  return ika_integer_from_uint64(pcb, rv);
+  return CityHash64(buf, len);
 }
 
 /* end of file */
