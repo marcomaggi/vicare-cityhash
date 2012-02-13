@@ -51,7 +51,22 @@ extern "C" {
  ** Hash functions.
  ** ----------------------------------------------------------------- */
 
-cch_decl uint64_t cch_city_hash_64 (const char *buf, size_t len);
+typedef struct cch_uint128_t {
+  uint64_t	low;
+  uint64_t	high;
+} cch_uint128_t;
+
+cch_decl uint64_t cch_cityhash64            (const char *buf, size_t len);
+cch_decl uint64_t cch_cityhash64_with_seed  (const char *buf, size_t len,
+					     uint64_t seed);
+cch_decl uint64_t cch_cityhash64_with_seeds (const char *buf, size_t len,
+					     uint64_t seed0, uint64_t seed1);
+cch_decl void     cch_cityhash128           (cch_uint128_t * result,
+					     const char *s, size_t len);
+cch_decl void     cch_cityhash128_with_seed (cch_uint128_t * result,
+					     const char *s, size_t len,
+					     cch_uint128_t * seme);
+cch_decl uint64_t cch_hash128to64 (cch_uint128_t * hash);
 
 
 /** --------------------------------------------------------------------
