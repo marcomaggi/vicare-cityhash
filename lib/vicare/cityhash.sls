@@ -41,27 +41,30 @@
 
     )
   (import (vicare)
+    (prefix (vicare unsafe-operations)
+	    unsafe.)
+    (prefix (vicare words)
+	    words.)
     (vicare syntactic-extensions))
 
 
 ;;;; arguments validation
 
-#;(define-argument-validation (fixnum who obj)
-  (fixnum? obj)
-  (assertion-violation who "expected fixnum as argument" obj))
+(define-argument-validation (false/length who obj)
+  (or (not obj) (and (fixnum? obj) (unsafe.fx<= 0 obj)))
+  (assertion-violation who "expected false or non-negative fixnum as argument" obj))
 
-#;(define-argument-validation (pointer who obj)
-  (ffi.pointer? obj)
-  (assertion-violation who "expected pointer as argument" obj))
+(define-argument-validation (uint64 who obj)
+  (words.word-u64? obj)
+  (assertion-violation who "expected uint64 as argument" obj))
 
-#;(define-argument-validation (callback who obj)
-  (ffi.pointer? obj)
-  (assertion-violation who "expected callback as argument" obj))
+(define-argument-validation (pointer/bytevector who obj)
+  (or (pointer? obj) (bytevector? obj))
+  (assertion-violation who "expected pointer or bytevector as argument" obj))
 
 (define-argument-validation (bytevector who obj)
   (bytevector? obj)
   (assertion-violation who "expected bytevector as argument" obj))
-
 
 
 ;;;; version functions
@@ -81,14 +84,43 @@
 
 ;;;; hash functions
 
-(define-inline (capi.cityhash64 bv)
-  (foreign-call "ikrt_cityhash_cityhash64" bv))
+(define-inline (capi.cityhash64 buf len)
+  (foreign-call "ikrt_cityhash_cityhash64" buf len))
 
-(define (CityHash64 bv)
-  (define who 'CityHash64)
-  (with-arguments-validation (who)
-      ((bytevector	bv))
-    (capi.cityhash64 bv)))
+(define-inline (capi.cityhash64-with-seed buf len seed)
+  (foreign-call "ikrt_cityhash_cityhash64_with_seed" buf len seed))
+
+(define-inline (capi.cityhash64-with-seeds buf len seed0 seed1)
+  (foreign-call "ikrt_cityhash_cityhash64_with_seeds" buf len seed0 seed1))
+
+(define CityHash64
+  (case-lambda
+   ((buf)
+    (define who 'CityHash64)
+    (with-arguments-validation (who)
+	((bytevector	buf))
+      (capi.cityhash64 buf #f)))
+   ((buf len)
+    (define who 'CityHash64)
+    (with-arguments-validation (who)
+	((pointer/bytevector	buf)
+	 (false/length		len))
+      (capi.cityhash64 buf len)))
+   ((buf len seed)
+    (define who 'CityHash64)
+    (with-arguments-validation (who)
+	((pointer/bytevector	buf)
+	 (false/length		len)
+	 (uint64		seed))
+      (capi.cityhash64-with-seed buf len seed)))
+   ((buf len seed0 seed1)
+    (define who 'CityHash64)
+    (with-arguments-validation (who)
+	((pointer/bytevector	buf)
+	 (false/length		len)
+	 (uint64		seed0)
+	 (uint64		seed1))
+      (capi.cityhash64-with-seeds buf len seed0 seed1)))))
 
 
 ;;;; done

@@ -59,11 +59,44 @@
   #t)
 
 
-(parametrise ((check-test-name	'hash))
+(parametrise ((check-test-name	'hash64))
 
   (check
       (CityHash64 #ve(ascii "ciao mamma"))
     => 13369116979487659421)
+
+  (check
+      (CityHash64 #ve(ascii "ciao mamma") #f)
+    => 13369116979487659421)
+
+  (check
+      (let ((S (string->guarded-cstring "ciao mamma")))
+	(CityHash64 S (strlen S)))
+    => 13369116979487659421)
+
+;;; --------------------------------------------------------------------
+;;; single seed
+
+  (check
+      (CityHash64 #ve(ascii "ciao mamma") #f 123)
+    => 2657430596187560033)
+
+  (check
+      (let ((S (string->guarded-cstring "ciao mamma")))
+	(CityHash64 S (strlen S) 123))
+    => 2657430596187560033)
+
+;;; --------------------------------------------------------------------
+;;; double seed
+
+  (check
+      (CityHash64 #ve(ascii "ciao mamma") #f 123 456)
+    => 13342318407315738916)
+
+  (check
+      (let ((S (string->guarded-cstring "ciao mamma")))
+	(CityHash64 S (strlen S) 123 456))
+    => 13342318407315738916)
 
   #t)
 
