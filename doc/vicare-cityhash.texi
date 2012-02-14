@@ -116,6 +116,7 @@ entitled ``@gnu{} Free Documentation License''.
 @menu
 * overview::                    Overview of the package.
 * version::                     Version informations.
+* hash::                        Hash functions.
 
 Appendices
 
@@ -174,12 +175,67 @@ library.
 @defun vicare-cityhash-version-interface-current
 @defunx vicare-cityhash-version-interface-revision
 @defunx vicare-cityhash-version-interface-age
-Return a fixnum representing a version number.
+Return a fixnum representing a version number of the @value{PACKAGE} C
+library function.
 @end defun
 
 
 @defun vicare-cityhash-version
-Return a Scheme string representing the versio number.
+Return a Scheme string representing the version number of the
+@value{PACKAGE} C library function.
+@end defun
+
+@c page
+@node hash
+@chapter Hash functions
+
+
+The following bindings are exported by the @library{vicare cityhash}
+library.
+
+
+@defun CityHash64 @var{buffer}
+@defunx CityHash64 @var{buffer} @var{length}
+@defunx CityHash64 @var{buffer} @var{length} @var{seed}
+@defunx CityHash64 @var{buffer} @var{length} @varo{seed} @vari{seed}
+Compute a hash value for the data in @var{buffer} and return it as
+64-bit exact integer.
+
+If @var{buffer} is given alone: it must be a Scheme bytevector and it is
+fully consumed.
+
+If @var{buffer} and @var{length} are given: if @var{buffer} is a
+bytevector, it is fully consumed and @var{length} is ignored; if
+@var{buffer} is a pointer, @var{length} bytes are consumed from the
+referenced memory; @var{length} must be a non--negative fixnum.
+
+If the @var{seed} arguments are given: they must be 64-bit exact
+integers and they are used as seed in computing the hash value.
+@end defun
+
+
+@defun CityHash128 @var{buffer}
+@defunx CityHash128 @var{buffer} @var{length}
+@defunx CityHash128 @var{buffer} @var{length} @var{seed}
+Compute a hash value for the data in @var{buffer} and return it as
+128-bit exact integer.
+
+If @var{buffer} is given alone: it must be a Scheme bytevector and it is
+fully consumed.
+
+If @var{buffer} and @var{length} are given: if @var{buffer} is a
+bytevector, it is fully consumed and @var{length} is ignored; if
+@var{buffer} is a pointer, @var{length} bytes are consumed from the
+referenced memory; @var{length} must be a non--negative fixnum.
+
+If the @var{seed} argument is given: it must be a 128-bit exact integer
+and it is used as seed in computing the hash value.
+@end defun
+
+
+@defun Hash128to64 @var{hash}
+Given a 128-bit exact integer representing a hash value: return a 64-bit
+exact integer representing a condensed hash value.
 @end defun
 
 @c page

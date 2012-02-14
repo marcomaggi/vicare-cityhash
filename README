@@ -95,7 +95,8 @@ is  an  R6RS compliant  fork  of  Ikarus Scheme;  originally
 created by Abdulaziz Ghuloum,  it is now maintained by Marco
 Maggi.
 
-  CityHash was created by Google.
+  CityHash  was created at  Google by  Geoff Pike  and Jyrki
+Alakuijala.
 
 
 B. Bugs
