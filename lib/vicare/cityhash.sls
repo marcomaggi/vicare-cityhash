@@ -37,7 +37,7 @@
     vicare-cityhash-version
 
     ;; hash functions
-    CityHash64
+    CityHash64 CityHash128
 
     )
   (import (vicare)
@@ -58,6 +58,10 @@
   (words.word-u64? obj)
   (assertion-violation who "expected uint64 as argument" obj))
 
+(define-argument-validation (uint128 who obj)
+  (%word-u128? obj)
+  (assertion-violation who "expected uint126 as argument" obj))
+
 (define-argument-validation (pointer/bytevector who obj)
   (or (pointer? obj) (bytevector? obj))
   (assertion-violation who "expected pointer or bytevector as argument" obj))
@@ -65,6 +69,18 @@
 (define-argument-validation (bytevector who obj)
   (bytevector? obj)
   (assertion-violation who "expected bytevector as argument" obj))
+
+
+;;;; helpers
+
+(define (%word-u128? N)
+  (define U128MAX (- (expt 2 128) 1))
+  (define U128MIN 0)
+  (if (fixnum? N)
+      (unsafe.fx<= 0 N)
+    (and (bignum? N)
+	 (unsafe.bignum-positive? N)
+	 (unsafe.bnbn<= N U128MAX))))
 
 
 ;;;; version functions
@@ -122,12 +138,42 @@
 	 (uint64		seed1))
       (capi.cityhash64-with-seeds buf len seed0 seed1)))))
 
+;;; --------------------------------------------------------------------
+
+(define-inline (capi.cityhash128 buf len)
+  (foreign-call "ikrt_cityhash_cityhash128" buf len))
+
+(define-inline (capi.cityhash128-with-seed buf len seed-low seed-high)
+  (foreign-call "ikrt_cityhash_cityhash128_with_seed" buf len seed-low seed-high))
+
+(define CityHash128
+  (case-lambda
+   ((buf)
+    (CityHash128 buf #f))
+   ((buf len)
+    (define who 'CityHash128)
+    (with-arguments-validation (who)
+	((pointer/bytevector	buf)
+	 (false/length		len))
+      (let* ((rv (capi.cityhash128 buf len))
+	     (lo (car rv))
+	     (hi (cdr rv)))
+	(bitwise-ior lo (bitwise-arithmetic-shift-left hi 64)))))
+   ((buf len seed)
+    (define who 'CityHash128)
+    (with-arguments-validation (who)
+	((pointer/bytevector	buf)
+	 (false/length		len)
+         (uint128		seed))
+      (let* ((seed-low	(bitwise-and seed #xFFFFFFFFFFFFFFFF))
+	     (seed-high	(bitwise-and (bitwise-arithmetic-shift-right seed 64) #xFFFFFFFFFFFFFFFF))
+	     (rv	(capi.cityhash128-with-seed buf len seed-low seed-high))
+	     (lo	(car rv))
+	     (hi	(cdr rv)))
+	(bitwise-ior lo (bitwise-arithmetic-shift-left hi 64)))))))
+
 
 ;;;; done
-
-#;(set-rtd-printer! (type-descriptor XML_ParsingStatus) %struct-XML_ParsingStatus-printer)
-
-#;(post-gc-hooks (cons %free-allocated-parser (post-gc-hooks)))
 
 )
 

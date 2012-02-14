@@ -101,6 +101,36 @@
   #t)
 
 
+(parametrise ((check-test-name	'hash128))
+
+  (check
+      (CityHash128 #ve(ascii "ciao mamma"))
+    => 131235075116098844223494819471478746232)
+
+  (check
+      (CityHash128 #ve(ascii "ciao mamma") #f)
+    => 131235075116098844223494819471478746232)
+
+  (check
+      (let ((S (string->guarded-cstring "ciao mamma")))
+	(CityHash128 S (strlen S)))
+    => 131235075116098844223494819471478746232)
+
+;;; --------------------------------------------------------------------
+;;; single seed
+
+  (check
+      (CityHash128 #ve(ascii "ciao mamma") #f 123)
+    => 87920264427534614818069060291346137540)
+
+  (check
+      (let ((S (string->guarded-cstring "ciao mamma")))
+	(CityHash128 S (strlen S) 123))
+    => 87920264427534614818069060291346137540)
+
+  #t)
+
+
 ;;;; done
 
 (check-report)
