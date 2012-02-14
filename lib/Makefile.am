@@ -1,14 +1,8 @@
 ## Process this file with automake to produce Makefile.in
 
-libvicaredir	= $(libdir)/scheme
-
-EXTRA_DIST	=			\
-	compile-all.sps			\
-	vicare/cityhash/constants.sls.in
-
-nobase_dist_libvicare_DATA =		\
-	vicare/cityhash.sls		\
-	vicare/cityhash/constants.sls
+libvicaredir			= $(libdir)/scheme
+EXTRA_DIST			= compile-all.sps
+nobase_dist_libvicare_DATA	= vicare/cityhash.sls
 
 ## --------------------------------------------------------------------
 

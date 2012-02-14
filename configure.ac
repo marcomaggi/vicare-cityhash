@@ -70,7 +70,7 @@ AC_SUBST([vicare_cityhash_VERSION_INTERFACE_AGE])
 #### finish
 
 AC_CONFIG_HEADERS([config.h])
-AC_CONFIG_FILES([Makefile src/Makefile doc/Makefile tests/Makefile lib/Makefile lib/vicare/cityhash/constants.sls])
+AC_CONFIG_FILES([Makefile src/Makefile doc/Makefile tests/Makefile lib/Makefile])
 AC_OUTPUT
 
 ### end of file
