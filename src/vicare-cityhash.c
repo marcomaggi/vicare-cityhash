@@ -62,7 +62,7 @@ ikrt_cityhash_version (ikpcb * pcb)
 
 
 /** --------------------------------------------------------------------
- ** Hash functions.
+ ** Hash functions 64-bit.
  ** ----------------------------------------------------------------- */
 
 ikptr
@@ -118,7 +118,10 @@ ikrt_cityhash_cityhash64_with_seeds (ikptr s_buffer, ikptr s_length,
   return ika_integer_from_uint64(pcb, rv);
 }
 
-/* ------------------------------------------------------------------ */
+
+/** --------------------------------------------------------------------
+ ** Hash functions 128-bit.
+ ** ----------------------------------------------------------------- */
 
 ikptr
 ikrt_cityhash_cityhash128 (ikptr s_buffer, ikptr s_length, ikpcb * pcb)
@@ -172,10 +175,15 @@ ikrt_cityhash_cityhash128_with_seed (ikptr s_buffer, ikptr s_length,
   pcb->root0 = NULL;
   return s_pair;
 }
-
-
-#if 0
-cch_decl uint64_t cch_hash128to64 (cch_uint128_t * hash);
-#endif
+ikptr
+ikrt_cityhash_hash128to64 (ikptr s_hash_low, ikptr s_hash_high, ikpcb * pcb)
+{
+  cch_uint128_t	hash;
+  uint64_t	rv;
+  hash.low  = ik_integer_to_uint64(s_hash_low);
+  hash.high = ik_integer_to_uint64(s_hash_high);
+  rv        = cch_hash128to64(&hash);
+  return ika_integer_from_uint64(pcb, rv);
+}
 
 /* end of file */

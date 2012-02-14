@@ -37,9 +37,7 @@
     vicare-cityhash-version
 
     ;; hash functions
-    CityHash64 CityHash128
-
-    )
+    CityHash64 CityHash128 Hash128to64)
   (import (vicare)
     (prefix (vicare unsafe-operations)
 	    unsafe.)
@@ -98,7 +96,7 @@
   (ascii->string (foreign-call "ikrt_cityhash_version")))
 
 
-;;;; hash functions
+;;;; hash functions 64-bit
 
 (define-inline (capi.cityhash64 buf len)
   (foreign-call "ikrt_cityhash_cityhash64" buf len))
@@ -138,13 +136,17 @@
 	 (uint64		seed1))
       (capi.cityhash64-with-seeds buf len seed0 seed1)))))
 
-;;; --------------------------------------------------------------------
+
+;;;; hash functions 128-bit
 
 (define-inline (capi.cityhash128 buf len)
   (foreign-call "ikrt_cityhash_cityhash128" buf len))
 
 (define-inline (capi.cityhash128-with-seed buf len seed-low seed-high)
   (foreign-call "ikrt_cityhash_cityhash128_with_seed" buf len seed-low seed-high))
+
+(define-inline (capi.cityhash-128-to-64 hash-low hash-high)
+  (foreign-call "ikrt_cityhash_hash128to64" hash-low hash-high))
 
 (define CityHash128
   (case-lambda
@@ -171,6 +173,14 @@
 	     (lo	(car rv))
 	     (hi	(cdr rv)))
 	(bitwise-ior lo (bitwise-arithmetic-shift-left hi 64)))))))
+
+(define (Hash128to64 hash)
+  (define who 'Hash128to64)
+  (with-arguments-validation (who)
+      ((uint128	hash))
+    (let ((lo	(bitwise-and hash #xFFFFFFFFFFFFFFFF))
+	  (hi	(bitwise-and (bitwise-arithmetic-shift-right hash 64) #xFFFFFFFFFFFFFFFF)))
+      (capi.cityhash-128-to-64 lo hi))))
 
 
 ;;;; done
