@@ -1,13 +1,12 @@
 /*
-  Part of: Vicare/CityHash
+  Part of: C wrapper for CityHash
   Contents: Cityhash for C language
   Date: Mon Feb 13, 2012
 
   Abstract
 
-	This  file bridges  C++ from  CityHash with  C needed  by Vicare
-	extensions.  This  file can be  considered a C  language wrapper
-	for the C++ functions.
+	This file bridges C++ from  CityHash with C language.  This file
+	can be considered a C language wrapper for the C++ functions.
 
   Copyright (C) 2012 Marco Maggi <marco.maggi-ipsu@poste.it>
 
@@ -33,7 +32,7 @@
 #ifdef HAVE_CONFIG_H
 #  include <config.h>
 #endif
-#include <internals.h>
+#include <cch.h>
 #include <city.h>
 
 

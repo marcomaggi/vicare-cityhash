@@ -32,7 +32,7 @@
 #  include <config.h>
 #endif
 #include <vicare.h>
-#include <internals.h>
+#include <cch.h>
 
 
 /** --------------------------------------------------------------------

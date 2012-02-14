@@ -1,6 +1,6 @@
 /*
-  Part of: Vicare/CityHash
-  Contents: internal header file
+  Part of: C wrapper for CityHash
+  Contents: header file
   Date: Mon Feb 13, 2012
 
   Abstract
@@ -23,8 +23,8 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef INTERNALS_H
-#define INTERNALS_H 1
+#ifndef CCH_H
+#define CCH_H 1
 
 
 /** --------------------------------------------------------------------
@@ -34,8 +34,7 @@
 #ifdef HAVE_CONFIG_H
 #  include <config.h>
 #endif
-#include <stdio.h>
-#include <limits.h>
+#include <stdlib.h>
 #include <stdint.h>
 
 #ifdef __cplusplus
@@ -77,6 +76,6 @@ cch_decl uint64_t cch_hash128to64 (cch_uint128_t * hash);
 } // extern "C"
 #endif
 
-#endif /* INTERNALS_H */
+#endif /* CCH_H */
 
 /* end of file */

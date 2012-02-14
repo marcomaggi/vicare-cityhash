@@ -7,6 +7,6 @@ vicare_cityhash_VERSION	= $(vicare_cityhash_CURRENT):$(vicare_cityhash_REVISION)
 
 lib_LTLIBRARIES			= libvicare-cityhash.la
 libvicare_cityhash_la_LDFLAGS	= -version-info $(vicare_cityhash_VERSION)
-libvicare_cityhash_la_SOURCES	= vicare-cityhash.c vicare-bridge.cpp internals.h
+libvicare_cityhash_la_SOURCES	= vicare-cityhash.c cch.cpp cch.h
 
 ### end of file
