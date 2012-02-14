@@ -142,7 +142,7 @@ the form of a native compiler for x86 architectures, officially
 supporting @gnu{}+Linux systems.  @value{PACKAGE} is a distribution of C
 language and Scheme language libraries for Vicare Scheme; it provides
 bindings for the CityHash C++ language library, which implements a hash
-function for strings.
+function for strings.  CityHash is distributed by Google.
 
 The last time the author bothered to update this paragraph, he had
 tested CityHash version 1.0.3; the Cityhash library is available at:
@@ -152,9 +152,7 @@ tested CityHash version 1.0.3; the Cityhash library is available at:
 The package installs a C language library implementing wrapper C
 functions for the C++ language CityHash library; on top of this, the
 Scheme library @library{vicare cityhash} exports one binding for each
-CityHash public function; additionally the library @library{vicare
-cityhash constants} exports one binding for each constant value defined
-in the C language header @file{city.h}.
+CityHash public function.
 
 This document contains only a brief description of the functions: refer
 to the CityHash's documentation for details.
@@ -217,14 +215,9 @@ the home page of the Vicare project is at:
 @center @url{http://marcomaggi.github.com/vicare.html}
 
 @noindent
-the home page of the Nausicaa project is at:
+CityHash can be found here:
 
-@center @url{http://marcomaggi.github.com/nausicaa.html}
-
-@noindent
-Cityhash can be found here:
-
-@center @url{http://cityhash.sourceforge.net/}
+@center @url{http://code.google.com/p/cityhash/}
 
 @c page
 @node concept index
