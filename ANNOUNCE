@@ -7,14 +7,14 @@ Subject: [announce] Vicare/CityHash revision 1.0b0
 This  package is a  distribution of  C and  Scheme libraries  for Vicare
 Scheme, an R6RS compliant Scheme  implementation in the form of a native
 compiler for x86 architectures, officially supporting GNU+Linux systems;
-it provides bindings for  the CityHash C+ language library, implementing
+it provides bindings for the CityHash C++ language library, implementing
 a hash function for strings.
 
   This package makes use of the GNU Autotools.
 
   The latest version of this package can be downloaded from Github:
 
-	<http://github.com/marcomaggi/vicare-cityhash>
+	     <http://github.com/marcomaggi/vicare-cityhash>
 
 the home page of the Vicare project is at:
 
