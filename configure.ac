@@ -67,12 +67,6 @@ AC_SUBST([vicare_cityhash_VERSION_INTERFACE_REVISION])
 AC_SUBST([vicare_cityhash_VERSION_INTERFACE_AGE])
 
 #page
-#### symbols
-
-dnl Stuff
-dnl VICARE_CONSTANT_TESTS([XML_TRUE XML_FALSE])
-
-#page
 #### finish
 
 AC_CONFIG_HEADERS([config.h])

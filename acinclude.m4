@@ -5,9 +5,6 @@ AC_INCLUDES_DEFAULT
 #ifdef HAVE_VICARE_H
 #  include <vicare.h>
 #endif
-#ifdef HAVE_TEMPLATE_H
-#  include <template.h>
-#endif
 ])
 
 dnl page
