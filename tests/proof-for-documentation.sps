@@ -28,8 +28,6 @@
 #!r6rs
 (import (vicare)
   (vicare cityhash)
-  (vicare cityhash constants)
-;;;  (prefix (vicare ffi) ffi.)
   (vicare syntactic-extensions))
 
 
