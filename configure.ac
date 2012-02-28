@@ -2,7 +2,9 @@ dnl @configure_input@
 dnl
 
 AC_PREREQ([2.68])
-AC_INIT([vicare-cityhash],[1.0b0],[marco.maggi-ipsu@poste.it])
+AC_INIT([Vicare/CityHash],[1.0b2],
+  [marco.maggi-ipsu@poste.it],[vicare-cityhash],
+  [http://marcomaggi.github.com/vicare.html])
 AC_CANONICAL_TARGET
 AM_INIT_AUTOMAKE
 LT_PREREQ([2.2])
