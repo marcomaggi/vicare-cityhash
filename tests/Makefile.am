@@ -44,10 +44,7 @@ installcheck-local:
 
 EXTRA_DIST =	\
 	test-vicare-cityhash.sps			\
-	\
-	proof-for-documentation.sps			\
-	\
-	checks.sls
+	proof-for-documentation.sps
 
 ### end of file
 # Local Variables:
