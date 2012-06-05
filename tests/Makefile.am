@@ -10,7 +10,7 @@ VICARE_TEST_SEARCH_PATH	= $(srcdir):$(srcdir)/../lib:$(builddir)/../lib
 # line of "make".
 VICARE		= @VICARE@
 VICARE_FLAGS	= --debug $(user_flags)
-VICARE_ENV	= VICARE_LIBRARY_PATH=$(VICARE_TEST_SEARCH_PATH)	\
+VICARE_ENV	= VICARE_LIBRARY_PATH=$(VICARE_TEST_SEARCH_PATH):$(VICARE_LIBRARY_PATH)	\
 		  CHECK_TEST_NAME=$(name)				\
 		  VICARE_SRC_DIR=$(srcdir) VICARE_BUILDDIR=$(builddir)	\
 		  LD_LIBRARY_PATH=$(builddir)/../src/.libs
@@ -30,13 +30,17 @@ proof proofs:
 
 ### interface to "make check"
 
+VICARE_INST_ENV		= VICARE_LIBRARY_PATH=$(srcdir):$(builddir):$(VICARE_LIBRARY_PATH)
+VICARE_INST_FLAGS	= --print-loaded-libraries $(user_flags)
+VICARE_INST_RUN		= $(VICARE_INST_ENV) $(VICARE) $(VICARE_INST_FLAGS)
+
 # TESTS and TESTS_ENVIRONMENT are Automake variables.
 TESTS_ENVIRONMENT	= $(VICARE_RUN)
 TESTS			=	\
 	test-vicare-cityhash.sps
 
 installcheck-local:
-	@for f in $(TESTS); do VICARE_LIBRARY_PATH=$(srcdir) $(VICARE) $(srcdir)/$$f; done
+	@for f in $(TESTS); do $(VICARE_INST_RUN) $(srcdir)/$$f; done
 
 EXTRA_DIST =	\
 	test-vicare-cityhash.sps			\

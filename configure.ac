@@ -7,8 +7,6 @@ AC_INIT([Vicare/CityHash],[1.0b3],
   [http://marcomaggi.github.com/vicare.html])
 AC_CANONICAL_TARGET
 AM_INIT_AUTOMAKE
-LT_PREREQ([2.2])
-LT_INIT([shared disable-static])
 AC_CONFIG_SRCDIR([src/])
 AC_CONFIG_MACRO_DIR([m4])
 dnl AM_MAINTAINER_MODE
@@ -26,9 +24,13 @@ AC_LANG([C++])
 AC_PROG_CXX
 AC_PROG_CXX_C_O
 
+AM_PROG_AR
 AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
+
+LT_PREREQ([2.2])
+LT_INIT([shared disable-static])
 
 AC_TYPE_INT32_T
 AC_TYPE_INT64_T
@@ -72,7 +74,8 @@ AC_SUBST([vicare_cityhash_VERSION_INTERFACE_AGE])
 #### finish
 
 AC_CONFIG_HEADERS([config.h])
-AC_CONFIG_FILES([Makefile src/Makefile doc/Makefile tests/Makefile lib/Makefile])
+AC_CONFIG_FILES([Makefile src/Makefile doc/Makefile tests/Makefile lib/Makefile
+                 meta/slackware/doinst.sh])
 AC_OUTPUT
 
 ### end of file
