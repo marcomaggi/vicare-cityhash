@@ -2,15 +2,28 @@ dnl @configure_input@
 dnl
 
 AC_PREREQ([2.68])
-AC_INIT([Vicare/CityHash],[1.0b3],
-  [marco.maggi-ipsu@poste.it],[vicare-cityhash],
-  [http://marcomaggi.github.com/vicare.html])
+AC_INIT([Vicare/CityHash],[1.0b4],[marco.maggi-ipsu@poste.it],
+  [vicare-cityhash],[http://marcomaggi.github.com/vicare.html])
 AC_CANONICAL_TARGET
 AM_INIT_AUTOMAKE([-Wall])
 dnl AM_MAINTAINER_MODE
 AC_CONFIG_SRCDIR([src/])
 AC_CONFIG_MACRO_DIR([m4])
 AC_CANONICAL_HOST
+
+VICARE_DEBUG=no
+AC_MSG_CHECKING([whether debugging features are included in compiled Scheme libraries])
+AC_ARG_ENABLE([debug],
+  [AS_HELP_STRING([--enable-debug],
+     [enable compilation of Scheme libraries with debugging features (default is disable)])],
+  [AC_MSG_RESULT([$enableval])
+  if test "z$enableval" = zno
+  then VICARE_DEBUG=no
+  else VICARE_DEBUG=yes
+  fi],
+  [VICARE_DEBUG=no
+   AC_MSG_RESULT([no])])
+AM_CONDITIONAL([WANT_VICARE_DEBUG],[test x$VICARE_DEBUG = xyes])
 
 #page
 #### compiler
