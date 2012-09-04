@@ -155,6 +155,17 @@ functions for the C++ language CityHash library; on top of this, the
 Scheme library @library{vicare cityhash} exports one binding for each
 CityHash public function.
 
+After installation, under the directory @code{$libexecdir/$PACKAGE}, a
+script @file{compile-all.sps} can be executed to precompile the
+installed libraries; for example:
+
+@example
+$ sudo vicare \
+   --fasl-directory /var/cache/vicare-scheme \
+   --compile-dependencies \
+      /usr/local/libexec/vicare-cityhash/compile-all.sps
+@end example
+
 This document contains only a brief description of the functions: refer
 to the CityHash's documentation for details.
 
