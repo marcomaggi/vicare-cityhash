@@ -1,4 +1,4 @@
-Subject: [announce] Vicare/CityHash revision 1.0b4
+Subject: [announce] Vicare/CityHash revision 1.0b5
 
 			    Vicare/CityHash
 			    ===============
@@ -28,6 +28,12 @@ development takes place at:
 tested CityHash version 1.0.3; the CityHash library is available at:
 
 		  <http://code.google.com/p/cityhash/>
+
+
+Notes for revision 1.0b5
+------------------------
+
+*
 
 
 Notes for revision 1.0b4
