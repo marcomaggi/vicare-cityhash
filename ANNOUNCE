@@ -12,9 +12,9 @@ a hash function for strings.
 
   This package makes use of the GNU Autotools.
 
-  The latest version of this package can be downloaded from Github:
+  The latest version of this package can be downloaded from:
 
-	     <http://github.com/marcomaggi/vicare-cityhash>
+	<http://code.google.com/p/vicare-scheme/downloads/list>
 
 the home page of the Vicare project is at:
 
@@ -33,7 +33,13 @@ tested CityHash version 1.0.3; the CityHash library is available at:
 Notes for revision 1.0b5
 ------------------------
 
-*
+* No new code.
+
+* The GNU  Autotools infrastructure has  been revised to  use Automake's
+  parallel  test harness  and  adjust the  installation  path of  Scheme
+  libraries to:
+
+			$(libdir)/vicare-scheme
 
 
 Notes for revision 1.0b4

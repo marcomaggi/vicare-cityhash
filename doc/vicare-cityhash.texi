@@ -54,6 +54,11 @@ C++ language library, which implements a hash function for strings.
 The package is distributed under the terms of the @gnu{} General Public
 License (@gpl{}) and can be downloaded from:
 
+@center @url{http://code.google.com/p/vicare-scheme/downloads/list}
+
+@noindent
+development takes place at:
+
 @center @url{http://github.com/marcomaggi/@value{PACKAGE_NICKNAME}}
 
 @noindent

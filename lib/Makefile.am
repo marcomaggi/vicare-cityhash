@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-libvicaredir	= $(libdir)/scheme
+libvicaredir	= $(libdir)/vicare-scheme
 
 # These files are hand-written.
 nobase_dist_libvicare_DATA = \
