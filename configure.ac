@@ -2,7 +2,7 @@ dnl @configure_input@
 dnl
 
 AC_PREREQ([2.68])
-AC_INIT([Vicare/CityHash],[1.0b5],[marco.maggi-ipsu@poste.it],
+AC_INIT([Vicare/CityHash],[1.0b6],[marco.maggi-ipsu@poste.it],
   [vicare-cityhash],[http://marcomaggi.github.com/vicare.html])
 AC_CONFIG_SRCDIR([src])
 AC_CONFIG_MACRO_DIR([autotools])
