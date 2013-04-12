@@ -2,7 +2,7 @@ dnl @configure_input@
 dnl
 
 AC_PREREQ([2.68])
-AC_INIT([Vicare/CityHash],[1.0b6],[marco.maggi-ipsu@poste.it],
+AC_INIT([Vicare/CityHash],[2.0b0],[marco.maggi-ipsu@poste.it],
   [vicare-cityhash],[http://marcomaggi.github.com/vicare.html])
 AC_CONFIG_SRCDIR([src])
 AC_CONFIG_MACRO_DIR([autotools])
@@ -13,22 +13,8 @@ AC_CANONICAL_TARGET
 AM_INIT_AUTOMAKE([-Wall foreign dist-xz no-dist-gzip])
 AM_MAINTAINER_MODE
 
-#page
-#### options
-
-VICARE_DEBUG=no
-AC_MSG_CHECKING([whether debugging features are included in compiled Scheme libraries])
-AC_ARG_ENABLE([debug],
-  [AS_HELP_STRING([--enable-debug],
-     [enable compilation of Scheme libraries with debugging features (default is disable)])],
-  [AC_MSG_RESULT([$enableval])
-  if test "z$enableval" = zno
-  then VICARE_DEBUG=no
-  else VICARE_DEBUG=yes
-  fi],
-  [VICARE_DEBUG=no
-   AC_MSG_RESULT([no])])
-AM_CONDITIONAL([WANT_VICARE_DEBUG],[test x$VICARE_DEBUG = xyes])
+VICARE_OPTION_DEBUGGING_MODE
+VICARE_OPTION_NAUSICAA([no])
 
 #page
 #### compiler
@@ -36,7 +22,6 @@ AM_CONDITIONAL([WANT_VICARE_DEBUG],[test x$VICARE_DEBUG = xyes])
 AC_PROG_CC
 AC_PROG_CC_C_O
 
-AC_LANG([C++])
 AC_PROG_CXX
 AC_PROG_CXX_C_O
 
@@ -44,10 +29,12 @@ AM_PROG_AR
 AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
+AC_PROG_MKDIR_P
 
 LT_PREREQ([2.4])
 LT_INIT([shared disable-static])
 
+AC_LANG([C])
 AC_TYPE_INT32_T
 AC_TYPE_INT64_T
 AC_TYPE_UINT32_T
@@ -62,32 +49,19 @@ AC_CHECK_PROG([VICARE],[vicare],[vicare],[:])
 #page
 #### cityhash configuration
 
+AC_LANG_PUSH([C++])
+
 AC_CHECK_HEADERS([city.h],,
   [AC_MSG_FAILURE([missing city.h header],[2])])
+AC_CHECK_HEADERS([citycrc.h],,
+  [AC_MSG_WARN([missing citycrc.h header])])
 AC_CHECK_LIB([cityhash],[main],,
   [AC_MSG_FAILURE([missing Cityhash library],[2])])
 
-vicare_cityhash_VERSION_INTERFACE_CURRENT=0
-vicare_cityhash_VERSION_INTERFACE_REVISION=0
-vicare_cityhash_VERSION_INTERFACE_AGE=0
-AC_DEFINE_UNQUOTED([vicare_cityhash_VERSION_INTERFACE_CURRENT],
-  [$vicare_cityhash_VERSION_INTERFACE_CURRENT],
-  [current interface number])
-AC_DEFINE_UNQUOTED([vicare_cityhash_VERSION_INTERFACE_REVISION],
-  [$vicare_cityhash_VERSION_INTERFACE_REVISION],
-  [current interface implementation number])
-AC_DEFINE_UNQUOTED([vicare_cityhash_VERSION_INTERFACE_AGE],
-  [$vicare_cityhash_VERSION_INTERFACE_AGE],
-  [current interface age number])
-AC_DEFINE_UNQUOTED([vicare_cityhash_VERSION_INTERFACE_STRING],
-  ["$vicare_cityhash_VERSION_INTERFACE_CURRENT.$vicare_cityhash_VERSION_INTERFACE_REVISION"],
-  [library interface version])
-AC_SUBST([vicare_cityhash_VERSION_INTERFACE_CURRENT])
-AC_SUBST([vicare_cityhash_VERSION_INTERFACE_REVISION])
-AC_SUBST([vicare_cityhash_VERSION_INTERFACE_AGE])
+VICARE_EXTENSION_LIBRARY_VERSION([cityhash],[0],[0],[0])
 
 #page
-#### constants
+#### constants and functions
 
 m4_define([VICARE_INCLUDES],[
 AC_INCLUDES_DEFAULT
@@ -97,7 +71,20 @@ AC_INCLUDES_DEFAULT
 #ifdef HAVE_CITY_H
 #  include <city.h>
 #endif
+#ifdef HAVE_CITYCRC_H
+#  include <citycrc.h>
+#endif
 ])
+
+dnl These are in the Cityhash C++ library.
+AC_CHECK_FUNCS([CityHash64 CityHash64WithSeed CityHash64WithSeeds])
+AC_CHECK_FUNCS([CityHash128 CityHash128WithSeed Hash128to64])
+
+AC_LANG_POP([C++])
+
+dnl These are in the C language adapter library
+dnl AC_CHECK_FUNCS([cch_cityhash64 cch_cityhash64_with_seed cch_cityhash64_with_seeds])
+dnl AC_CHECK_FUNCS([cch_cityhash128 cch_cityhash128_with_seed cch_hash128to64])
 
 #page
 #### finish
@@ -108,6 +95,7 @@ AC_CONFIG_FILES([Makefile]
         [doc/Makefile]
         [tests/Makefile]
         [lib/Makefile]
+dnl     [lib/vicare/crypto/cityhash/constants.sls]
         [meta/slackware/doinst.sh])
 AC_OUTPUT
 

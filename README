@@ -24,7 +24,7 @@ provides  bindings for  the Cityhash  C++ language  library,
 which implements a hash function for strings.
 
   The  last   time  the  author  bothered   to  update  this
-paragraph, he had tested CityHash version 1.0.3.
+paragraph, he had tested CityHash version 1.1.0.
 
   This package makes use of the GNU Autotools.
 
@@ -32,7 +32,7 @@ paragraph, he had tested CityHash version 1.0.3.
 2. License
 ----------
 
-Copyright (c) 2012 Marco Maggi <marco.maggi-ipsu@poste.it>
+Copyright (c) 2012, 2013 Marco Maggi <marco.maggi-ipsu@poste.it>
 
 This  program  is free  software:  you  can redistribute  it
 and/or modify it  under the terms of the  GNU General Public
@@ -99,8 +99,9 @@ from a proper release tarball.
 
   After  installation: the  makefile rule  "vfasl-installed"
 will  precompile the  libraries installed  in the  hierarchy
-(vicare  cityhash ---);  the make  file rule  "installcheck"
-will run the test suite against the installed libraries.
+(vicare   crypto  cityhash   ---);   the   make  file   rule
+"installcheck" will run the test suite against the installed
+libraries.
 
 
 4. Usage

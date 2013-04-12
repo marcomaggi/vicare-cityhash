@@ -8,7 +8,7 @@
 ;;;
 ;;;
 ;;;
-;;;Copyright (C) 2012 Marco Maggi <marco.maggi-ipsu@poste.it>
+;;;Copyright (C) 2012, 2013 Marco Maggi <marco.maggi-ipsu@poste.it>
 ;;;
 ;;;This program is free software:  you can redistribute it and/or modify
 ;;;it under the terms of the  GNU General Public License as published by
@@ -27,7 +27,7 @@
 
 #!vicare
 #!(load-shared-library "vicare-cityhash")
-(library (vicare cityhash)
+(library (vicare crypto cityhash)
   (export
 
     ;; version numbers and strings
@@ -39,6 +39,8 @@
     ;; hash functions
     CityHash64 CityHash128 Hash128to64)
   (import (vicare)
+    (prefix (vicare crypto cityhash unsafe-capi)
+	    capi.)
     (prefix (vicare unsafe-operations)
 	    unsafe.)
     (prefix (vicare words)
@@ -83,29 +85,20 @@
 
 ;;;; version functions
 
-(define-inline (vicare-cityhash-version-interface-current)
-  (foreign-call "ikrt_cityhash_version_interface_current"))
+(define (vicare-cityhash-version-interface-current)
+  (capi.vicare-cityhash-version-interface-current))
 
-(define-inline (vicare-cityhash-version-interface-revision)
-  (foreign-call "ikrt_cityhash_version_interface_revision"))
+(define (vicare-cityhash-version-interface-revision)
+  (capi.vicare-cityhash-version-interface-revision))
 
-(define-inline (vicare-cityhash-version-interface-age)
-  (foreign-call "ikrt_cityhash_version_interface_age"))
+(define (vicare-cityhash-version-interface-age)
+  (capi.vicare-cityhash-version-interface-age))
 
-(define-inline (vicare-cityhash-version)
-  (ascii->string (foreign-call "ikrt_cityhash_version")))
+(define (vicare-cityhash-version)
+  (capi.vicare-cityhash-version))
 
 
 ;;;; hash functions 64-bit
-
-(define-inline (capi.cityhash64 buf len)
-  (foreign-call "ikrt_cityhash_cityhash64" buf len))
-
-(define-inline (capi.cityhash64-with-seed buf len seed)
-  (foreign-call "ikrt_cityhash_cityhash64_with_seed" buf len seed))
-
-(define-inline (capi.cityhash64-with-seeds buf len seed0 seed1)
-  (foreign-call "ikrt_cityhash_cityhash64_with_seeds" buf len seed0 seed1))
 
 (define CityHash64
   (case-lambda
@@ -144,15 +137,6 @@
 
 
 ;;;; hash functions 128-bit
-
-(define-inline (capi.cityhash128 buf len)
-  (foreign-call "ikrt_cityhash_cityhash128" buf len))
-
-(define-inline (capi.cityhash128-with-seed buf len seed-low seed-high)
-  (foreign-call "ikrt_cityhash_cityhash128_with_seed" buf len seed-low seed-high))
-
-(define-inline (capi.cityhash-128-to-64 hash-low hash-high)
-  (foreign-call "ikrt_cityhash_hash128to64" hash-low hash-high))
 
 (define CityHash128
   (case-lambda

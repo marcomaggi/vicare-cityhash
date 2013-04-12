@@ -37,8 +37,21 @@
 
 @c To be used as @value{COPYRIGHT_YEARS} whenever we need to include the
 @c list of copyright years.
-@set COPYRIGHT_YEARS            2012
+@set COPYRIGHT_YEARS            2012, 2013
 
+@c ------------------------------------------------------------
+
+@set FOREIGN_PACKAGE            @cityhash{}
+@set FOREIGN_VERSION            1.1.0
+@set FOREIGN_URL                @url{http:/@//@/code.google.com/@/p/@/cityhash/}
+@set FOREIGN_SCHEME_LIB         @library{vicare crypto cityhash}
+@set GITHUB_URL                 @url{http://github.com/marcomaggi/vicare-cityhash}
+@set DOWNLOAD_URL               @url{http://code.google.com/p/vicare-scheme/downloads/list}
+@set DOCUMENTATION_URL          @url{http://marcomaggi.github.com/docs/vicare-cityhash.html}
+
+@macro cityhash{}
+CityHash
+@end macro
 
 @c page
 @c ------------------------------------------------------------
@@ -46,25 +59,26 @@
 @c ------------------------------------------------------------
 
 @copying
-This document describes version @version{} of @value{PACKAGE}, a
+This document describes version @value{VERSION} of @value{PACKAGE}, a
 distribution of C and Scheme libraries for Vicare Scheme, an @rnrs{6}
-compliant Scheme implementation; it provides bindings for the CityHash
-C++ language library, which implements a hash function for strings.
+compliant Scheme implementation; it provides bindings for the
+@value{FOREIGN_PACKAGE} C++ language library, which implements a hash
+function for strings.
 
 The package is distributed under the terms of the @gnu{} General Public
 License (@gpl{}) and can be downloaded from:
 
-@center @url{http://code.google.com/p/vicare-scheme/downloads/list}
+@center @value{DOWNLOAD_URL}
 
 @noindent
 development takes place at:
 
-@center @url{http://github.com/marcomaggi/@value{PACKAGE_NICKNAME}}
+@center @value{GITHUB_URL}
 
 @noindent
-CityHash is available at:
+@value{FOREIGN_PACKAGE} is available at:
 
-@center @url{http://code.google.com/p/cityhash/}
+@center @value{FOREIGN_URL}
 
 @noindent
 Copyright @copyright{} @value{COPYRIGHT_YEARS} by @value{AUTHOR} @value{AUTHOR_EMAIL}
@@ -147,21 +161,67 @@ Vicare Scheme is an @rnrs{6} compliant Scheme language implementation in
 the form of a native compiler for x86 architectures, officially
 supporting @gnu{}+Linux systems.  @value{PACKAGE} is a distribution of C
 language and Scheme language libraries for Vicare Scheme; it provides
-bindings for the CityHash C++ language library, which implements a hash
-function for strings.  CityHash is distributed by Google.
+bindings for the @value{FOREIGN_PACKAGE} C++ language library, which
+implements a hash function for strings.  @value{FOREIGN_PACKAGE} is
+distributed by Google.
 
 The last time the author bothered to update this paragraph, he had
-tested CityHash version 1.0.3; the Cityhash library is available at:
+tested @value{FOREIGN_PACKAGE} version @value{FOREIGN_VERSION}; the
+@value{FOREIGN_PACKAGE} library is available at:
 
-@center @url{http://code.google.com/p/cityhash/}
+@center @value{FOREIGN_URL}
 
 The package installs a C language library implementing wrapper C
-functions for the C++ language CityHash library; on top of this, the
-Scheme library @library{vicare cityhash} exports one binding for each
-CityHash public function.
+functions for the C++ language @value{FOREIGN_PACKAGE} library; on top
+of this, the Scheme library @value{FOREIGN_SCHEME_LIB} exports one
+binding for some @value{FOREIGN_PACKAGE} public function.
 
-After installation, under the directory @code{$libexecdir/$PACKAGE}, a
-script @file{compile-all.sps} can be executed to precompile the
+The following Scheme libraries are installed:
+
+@table @library
+@item vicare crypto cityhash
+@cindex Library @library{vicare crypto cityhash}
+@cindex @library{vicare crypto cityhash}, library
+It exports one binding for some @value{FOREIGN_PACKAGE} public function.
+All the Scheme function names are equal to the C++ function names.
+
+@item vicare crypto cityhash unsafe-capi
+@cindex Library @library{vicare crypto cityhash unsafe-capi}
+@cindex @library{vicare crypto cityhash unsafe-capi}, library
+It exports one syntax binding for each @value{FOREIGN_PACKAGE} public
+function.  All the Scheme syntax names are equal to the C++ function
+names.
+
+These syntaxes expand to a direct call to the C language wrapper
+functions in the @value{PACKAGE} library; they are not meant to be
+called in normal usage of the package.
+
+@ignore
+@item vicare crypto cityhash constants
+@cindex Library @library{vicare crypto cityhash constants}
+@cindex @library{vicare crypto cityhash constants}, library
+It exports one binding for each constant value defined in the C language
+header @file{city.h}.
+@end ignore
+
+@item vicare crypto cityhash features
+@cindex Library @library{vicare crypto cityhash features}
+@cindex @library{vicare crypto cityhash features}, library
+It exports one identifier syntax binding for each @code{HAVE_} constant
+defined by the @command{configure} script, expanding to @true{} or
+@false{}.
+@end table
+
+Scheme libraries are installed under the directory:
+
+@center @file{$(libdir)/vicare-scheme}
+
+After installation, under the directory:
+
+@center @file{$(libexecdir)/@value{PACKAGE_NICKNAME}}
+
+@noindent
+a script @file{compile-all.sps} can be executed to precompile the
 installed libraries; for example:
 
 @example
@@ -172,7 +232,7 @@ $ sudo vicare \
 @end example
 
 This document contains only a brief description of the functions: refer
-to the CityHash's documentation for details.
+to the @value{FOREIGN_PACKAGE}'s documentation for details.
 
 @c page
 @node version
@@ -184,7 +244,7 @@ The installed C library follows version numbering as established by the
 @gnu{} Libtool @xref{Libtool versioning, interface, Libtool's versioning
 system, libtool, Shared library support for @gnu{}}.
 
-The following bindings are exported by the @library{vicare cityhash}
+The following bindings are exported by the @value{FOREIGN_SCHEME_LIB}
 library.
 
 
@@ -206,7 +266,7 @@ Return a Scheme string representing the version number of the
 @chapter Hash functions
 
 
-The following bindings are exported by the @library{vicare cityhash}
+The following bindings are exported by the @value{FOREIGN_SCHEME_LIB}
 library.
 
 
@@ -269,17 +329,17 @@ exact integer representing a condensed hash value.
 
 The documentation of @value{PACKAGE} is available online:
 
-@center @url{http://marcomaggi.github.com/docs/vicare-cityhash.html}
+@center @value{DOCUMENTATION_URL}
 
 @noindent
 the latest version of this package can be downloaded from:
 
-@center @url{http://github.com/marcomaggi/vicare-cityhash/downloads}
+@center @value{DOWNLOAD_URL}
 
 @noindent
 development takes place at:
 
-@center @url{http://github.com/marcomaggi/vicare-cityhash/}
+@center @value{GITHUB_URL}
 
 @noindent
 the home page of the Vicare project is at:
@@ -287,9 +347,9 @@ the home page of the Vicare project is at:
 @center @url{http://marcomaggi.github.com/vicare.html}
 
 @noindent
-CityHash can be found here:
+@value{FOREIGN_PACKAGE} can be found here:
 
-@center @url{http://code.google.com/p/cityhash/}
+@center @value{FOREIGN_URL}
 
 @c page
 @node concept index

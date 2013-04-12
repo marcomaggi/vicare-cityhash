@@ -1,4 +1,4 @@
-Subject: [announce] Vicare/CityHash revision 1.0b6
+Subject: [announce] Vicare/CityHash revision 2.0b0
 
 			    Vicare/CityHash
 			    ===============
@@ -24,16 +24,19 @@ development takes place at:
 
 	    <http://github.com/marcomaggi/vicare-cityhash/>
 
-  The last  time the  author bothered to  update this paragraph,  he had
-tested CityHash version 1.0.3; the CityHash library is available at:
+  The last  time the author  bothered to  update this paragraph,  he had
+tested CityHash version 1.1.0; the CityHash library is available at:
 
 		  <http://code.google.com/p/cityhash/>
 
 
-Notes for revision 1.0b6
+Notes for revision 2.0b0
 ------------------------
 
-*
+* Updated to CityHash 1.1.0.
+
+* BACKWARDS  INCOMPATIBILITY  The libraries  are  now  installed in  the
+  hierarchy (vicare crypto cityhash).
 
 
 Notes for revision 1.0b5
