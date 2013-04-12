@@ -174,7 +174,7 @@ tested @value{FOREIGN_PACKAGE} version @value{FOREIGN_VERSION}; the
 The package installs a C language library implementing wrapper C
 functions for the C++ language @value{FOREIGN_PACKAGE} library; on top
 of this, the Scheme library @value{FOREIGN_SCHEME_LIB} exports one
-binding for some @value{FOREIGN_PACKAGE} public function.
+binding for some @value{FOREIGN_PACKAGE} public functions.
 
 The following Scheme libraries are installed:
 
