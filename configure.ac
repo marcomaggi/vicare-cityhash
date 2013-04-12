@@ -58,6 +58,8 @@ AC_CHECK_HEADERS([citycrc.h],,
 AC_CHECK_LIB([cityhash],[main],,
   [AC_MSG_FAILURE([missing Cityhash library],[2])])
 
+AC_LANG_POP([C++])
+
 VICARE_EXTENSION_LIBRARY_VERSION([cityhash],[0],[0],[0])
 
 #page
@@ -77,10 +79,36 @@ AC_INCLUDES_DEFAULT
 ])
 
 dnl These are in the Cityhash C++ library.
-AC_CHECK_FUNCS([CityHash64 CityHash64WithSeed CityHash64WithSeeds])
-AC_CHECK_FUNCS([CityHash128 CityHash128WithSeed Hash128to64])
+VICARE_CHECK_CPP_FUNC([CityHash64],
+  [const char buf = 1;
+   CityHash64(&buf, 1);],
+  [VICARE_INCLUDES])
 
-AC_LANG_POP([C++])
+VICARE_CHECK_CPP_FUNC([CityHash64WithSeed],
+  [const char buf = 1;
+   CityHash64WithSeed(&buf,1,1);],
+  [VICARE_INCLUDES])
+
+VICARE_CHECK_CPP_FUNC([CityHash64WithSeeds],
+  [const char buf = 1;
+   CityHash64WithSeeds(&buf,1,1,1);],
+  [VICARE_INCLUDES])
+
+VICARE_CHECK_CPP_FUNC([CityHash128],
+  [const char buf = 1;
+   CityHash128(&buf, 1);],
+  [VICARE_INCLUDES])
+
+VICARE_CHECK_CPP_FUNC([CityHash128WithSeed],
+  [const char buf = 1;
+   uint128 seed(1, 2);
+   CityHash128WithSeed(&buf,1,seed);],
+  [VICARE_INCLUDES])
+
+VICARE_CHECK_CPP_FUNC([Hash128to64],
+  [uint128 hash(1, 2);
+   Hash128to64(hash);],
+  [VICARE_INCLUDES])
 
 dnl These are in the C language adapter library
 dnl AC_CHECK_FUNCS([cch_cityhash64 cch_cityhash64_with_seed cch_cityhash64_with_seeds])

@@ -133,6 +133,27 @@ AC_DEFUN([VICARE_DOUBLEOF_TEST],
 AC_DEFUN([VICARE_DOUBLEOF_TESTS],[m4_map_args_w($1,[VICARE_DOUBLEOF_TEST(],[)])])
 
 dnl page
+dnl Checking functions.
+
+dnl $1 - function name
+dnl $2 - program body
+dnl $3 - includes
+AC_DEFUN([VICARE_CHECK_CPP_FUNC],
+  [AS_LINENO_PUSH([$1])
+   AC_LANG_PUSH([C++])
+   AC_CACHE_CHECK([for $1],
+     [vicare_cv_func_$1],
+     [AC_LINK_IFELSE([AC_LANG_PROGRAM([$3],[$2])],
+        [AS_VAR_SET([vicare_cv_func_$1],[yes])],
+        [AS_VAR_SET([vicare_cv_func_$1],[no])])])
+   dnl Prepare the autoheader snippet for the function.
+   _AH_CHECK_FUNC([$1])
+   AS_VAR_IF(vicare_cv_func_$1,[yes],
+     [AC_DEFINE_UNQUOTED(AS_TR_CPP([HAVE_]$1))])
+   AC_LANG_POP([C++])
+   AS_LINENO_POP])
+
+dnl page
 dnl 1 WITH_TEMP_FILE_CHUNK
 dnl 2 AFTER_CHUNK
 AC_DEFUN([VICARE_WITH_TMPFILE],
