@@ -28,7 +28,7 @@
 #!r6rs
 (import (vicare)
   (vicare crypto cityhash)
-  (vicare syntactic-extensions))
+  #;(vicare syntactic-extensions))
 
 
 ;;;; helpers

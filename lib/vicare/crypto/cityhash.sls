@@ -41,34 +41,22 @@
   (import (vicare)
     (prefix (vicare crypto cityhash unsafe-capi)
 	    capi.)
-    (prefix (vicare unsafe-operations)
-	    unsafe.)
-    (prefix (vicare words)
+    (vicare unsafe operations)
+    (prefix (vicare platform words)
 	    words.)
-    (vicare syntactic-extensions))
+    (vicare arguments validation)
+    #;(vicare language-extensions syntaxes))
 
 
 ;;;; arguments validation
 
 (define-argument-validation (false/length who obj)
-  (or (not obj) (and (fixnum? obj) (unsafe.fx<= 0 obj)))
+  (or (not obj) (and (fixnum? obj) ($fx<= 0 obj)))
   (assertion-violation who "expected false or non-negative fixnum as argument" obj))
-
-(define-argument-validation (uint64 who obj)
-  (words.word-u64? obj)
-  (assertion-violation who "expected uint64 as argument" obj))
-
-(define-argument-validation (uint128 who obj)
-  (%word-u128? obj)
-  (assertion-violation who "expected uint126 as argument" obj))
 
 (define-argument-validation (pointer/bytevector who obj)
   (or (pointer? obj) (bytevector? obj))
   (assertion-violation who "expected pointer or bytevector as argument" obj))
-
-(define-argument-validation (bytevector who obj)
-  (bytevector? obj)
-  (assertion-violation who "expected bytevector as argument" obj))
 
 
 ;;;; helpers
@@ -77,10 +65,10 @@
   (define U128MAX (- (expt 2 128) 1))
   (define U128MIN 0)
   (if (fixnum? N)
-      (unsafe.fx<= 0 N)
+      ($fx<= 0 N)
     (and (bignum? N)
-	 (unsafe.bignum-positive? N)
-	 (unsafe.bnbn<= N U128MAX))))
+	 ($bignum-positive? N)
+	 ($bnbn<= N U128MAX))))
 
 
 ;;;; version functions
@@ -120,7 +108,7 @@
     (with-arguments-validation (who)
 	((pointer/bytevector	buf)
 	 (false/length		len)
-	 (uint64		seed))
+	 (word-u64		seed))
       (when (pointer? buf)
 	(assert (fixnum? len)))
       (capi.cityhash64-with-seed buf len seed)))
@@ -129,8 +117,8 @@
     (with-arguments-validation (who)
 	((pointer/bytevector	buf)
 	 (false/length		len)
-	 (uint64		seed0)
-	 (uint64		seed1))
+	 (word-u64		seed0)
+	 (word-u64		seed1))
       (when (pointer? buf)
 	(assert (fixnum? len)))
       (capi.cityhash64-with-seeds buf len seed0 seed1)))))
@@ -158,7 +146,7 @@
     (with-arguments-validation (who)
 	((pointer/bytevector	buf)
 	 (false/length		len)
-         (uint128		seed))
+         (word-u128		seed))
       (when (pointer? buf)
 	(assert (fixnum? len)))
       (let* ((seed-low	(bitwise-and seed #xFFFFFFFFFFFFFFFF))
@@ -171,7 +159,7 @@
 (define (Hash128to64 hash)
   (define who 'Hash128to64)
   (with-arguments-validation (who)
-      ((uint128	hash))
+      ((word-u128	hash))
     (let ((lo	(bitwise-and hash #xFFFFFFFFFFFFFFFF))
 	  (hi	(bitwise-and (bitwise-arithmetic-shift-right hash 64) #xFFFFFFFFFFFFFFFF)))
       (capi.cityhash-128-to-64 lo hi))))
