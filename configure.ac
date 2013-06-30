@@ -13,38 +13,35 @@ AC_CANONICAL_TARGET
 AM_INIT_AUTOMAKE([-Wall foreign dist-xz no-dist-gzip])
 AM_MAINTAINER_MODE
 
-VICARE_OPTION_DEBUGGING_MODE
-VICARE_OPTION_NAUSICAA([no])
-
-#page
-#### compiler
-
 AC_PROG_CC
 AC_PROG_CC_C_O
-
 AC_PROG_CXX
 AC_PROG_CXX_C_O
-
 AM_PROG_AR
 AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
 AC_PROG_MKDIR_P
-
 LT_PREREQ([2.4])
 LT_INIT([shared disable-static])
+
+VICARE_SCHEME
+
+VICARE_OPTION_DEBUGGING_MODE
+VICARE_OPTION_NAUSICAA([no])
+AM_CONDITIONAL([WANT_NAUSICAA],[test x$vicare_with_nausicaa = xyes])
+
+AM_CONDITIONAL([WANT_VICARE_DEBUG],[test x$VICARE_DEBUG = xyes])
+AM_COND_IF([WANT_VICARE_DEBUG],[AS_VAR_SET(VFLAGS,"$VFLAGS -g")])
+
+AC_LANG([C])
+AC_DEFINE([_GNU_SOURCE],[1],[enable everything GNU])
 
 AC_LANG([C])
 AC_TYPE_INT32_T
 AC_TYPE_INT64_T
 AC_TYPE_UINT32_T
 AC_TYPE_UINT64_T
-
-#page
-#### vicare configuration
-
-AC_CHECK_HEADERS([vicare.h],,[AC_MSG_FAILURE([missing vicare.h header],[2])])
-AC_CHECK_PROG([VICARE],[vicare],[vicare],[:])
 
 #page
 #### cityhash configuration
@@ -117,6 +114,7 @@ dnl AC_CHECK_FUNCS([cch_cityhash128 cch_cityhash128_with_seed cch_hash128to64])
 #page
 #### finish
 
+VICARE_OUTPUT
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_FILES([Makefile]
         [src/Makefile]

@@ -14,7 +14,7 @@ a hash function for strings.
 
   The latest version of this package can be downloaded from:
 
-	<http://code.google.com/p/vicare-scheme/downloads/list>
+       <https://sourceforge.net/projects/vicare-cityhash/files/>
 
 the home page of the Vicare project is at:
 
@@ -33,7 +33,7 @@ tested CityHash version 1.1.0; the CityHash library is available at:
 Notes for revision 2.0b1
 ------------------------
 
-*
+* Updated to and dependent on Vicare Scheme 0.3.
 
 
 Notes for revision 2.0b0

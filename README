@@ -141,11 +141,15 @@ The documentation of Vicare/CityHash is available online:
 
 the latest version of this package can be downloaded from:
 
-  <http://code.google.com/p/vicare-scheme/downloads/list>
+ <https://sourceforge.net/projects/vicare-cityhash/files/>
 
 development takes place at:
 
       <http://github.com/marcomaggi/vicare-cityhash/>
+
+and as backup at:
+
+    <https://sourceforge.net/projects/vicare-cityhash/>
 
 the home page of the Vicare project is at:
 
