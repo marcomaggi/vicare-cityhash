@@ -180,8 +180,8 @@ tested @value{FOREIGN_PACKAGE} version @value{FOREIGN_VERSION}; the
 
 The package installs a C language library implementing wrapper C
 functions for the C++ language @value{FOREIGN_PACKAGE} library; on top
-of this, the Scheme library @value{FOREIGN_SCHEME_LIB} exports one
-binding for some @value{FOREIGN_PACKAGE} public functions.
+of this, the Scheme library @value{FOREIGN_SCHEME_LIB} exports syntactic
+bindings for some @value{FOREIGN_PACKAGE} public functions.
 
 The following Scheme libraries are installed:
 
@@ -189,27 +189,20 @@ The following Scheme libraries are installed:
 @item vicare crypto cityhash
 @cindex Library @library{vicare crypto cityhash}
 @cindex @library{vicare crypto cityhash}, library
-It exports one binding for some @value{FOREIGN_PACKAGE} public function.
-All the Scheme function names are equal to the C++ function names.
+It exports syntactic bindings for some @value{FOREIGN_PACKAGE} public
+functions.  All the Scheme function names are equal to the C++ function
+names.
 
 @item vicare crypto cityhash unsafe-capi
 @cindex Library @library{vicare crypto cityhash unsafe-capi}
 @cindex @library{vicare crypto cityhash unsafe-capi}, library
-It exports one syntax binding for each @value{FOREIGN_PACKAGE} public
-function.  All the Scheme syntax names are equal to the C++ function
+It exports syntax bindings for some @value{FOREIGN_PACKAGE} public
+functions.  All the Scheme syntax names are equal to the C++ function
 names.
 
 These syntaxes expand to a direct call to the C language wrapper
 functions in the @value{PACKAGE} library; they are not meant to be
 called in normal usage of the package.
-
-@ignore
-@item vicare crypto cityhash constants
-@cindex Library @library{vicare crypto cityhash constants}
-@cindex @library{vicare crypto cityhash constants}, library
-It exports one binding for each constant value defined in the C language
-header @file{city.h}.
-@end ignore
 
 @item vicare crypto cityhash features
 @cindex Library @library{vicare crypto cityhash features}
@@ -275,6 +268,22 @@ referenced memory; @var{length} must be a non--negative fixnum.
 
 If the @var{seed} arguments are given: they must be 64-bit exact
 integers and they are used as seed in computing the hash value.
+
+@lisp
+#!vicare
+(import (vicare)
+  (vicare crypto cityhash))
+
+(CityHash64 #ve(ascii "ciao mamma")
+@result{} #x129FE6F62BE2F237
+
+(let ((S (string->guarded-cstring "ciao mamma")))
+  (CityHash64 S (strlen S)))
+@result{} #x129FE6F62BE2F237
+
+(CityHash64 #ve(ascii "ciao mamma") #f 123 456)
+@result{} #xE6702B1C592DA870
+@end lisp
 @end defun
 
 
