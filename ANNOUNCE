@@ -1,11 +1,11 @@
-Subject: [announce] Vicare/CityHash revision 2.0b2
+Subject: [announce] Vicare/CityHash revision 3.0d0
 
 			    Vicare/CityHash
 			    ===============
 
 
-This  package is a  distribution of  C and  Scheme libraries  for Vicare
-Scheme, an R6RS compliant Scheme  implementation in the form of a native
+This package  is a  distribution of  C and  Scheme libraries  for Vicare
+Scheme, an R6RS compliant Scheme implementation  in the form of a native
 compiler for x86 architectures, officially supporting GNU+Linux systems;
 it provides bindings for the CityHash C++ language library, implementing
 a hash function for strings.
@@ -14,26 +14,30 @@ a hash function for strings.
 
   The latest version of this package can be downloaded from:
 
-       <https://sourceforge.net/projects/vicare-cityhash/files/>
+      <https://bitbucket.org/marcomaggi/vicare-cityhash/downloads>
 
 the home page of the Vicare project is at:
 
-               <http://marcomaggi.github.com/vicare.html>
+	       <http://marcomaggi.github.io/vicare.html>
 
 development takes place at:
 
 	    <http://github.com/marcomaggi/vicare-cityhash/>
 
+and as backup at:
+
+	  <https://bitbucket.org/marcomaggi/vicare-cityhash/>
+
   The last  time the author  bothered to  update this paragraph,  he had
-tested CityHash version 1.1.0; the CityHash library is available at:
+tested CityHash version 1.1.1; the CityHash library is available at:
 
 		  <http://code.google.com/p/cityhash/>
 
 
-Notes for revision 2.0b2
+Notes for revision 3.0d0
 ------------------------
 
-*
+* Start support for Vicare Scheme 0.4.
 
 
 Notes for revision 2.0b1

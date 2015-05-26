@@ -8,7 +8,7 @@
 ;;;
 ;;;
 ;;;
-;;;Copyright (C) 2012, 2013 Marco Maggi <marco.maggi-ipsu@poste.it>
+;;;Copyright (C) 2012, 2013, 2015 Marco Maggi <marco.maggi-ipsu@poste.it>
 ;;;
 ;;;This program is free software:  you can redistribute it and/or modify
 ;;;it under the terms of the  GNU General Public License as published by
@@ -26,8 +26,8 @@
 
 
 #!vicare
-#!(load-shared-library "vicare-cityhash")
 (library (vicare crypto cityhash)
+  (foreign-library "vicare-cityhash")
   (export
 
     ;; version numbers and strings
@@ -44,8 +44,7 @@
     (vicare unsafe operations)
     (prefix (vicare platform words)
 	    words.)
-    (vicare arguments validation)
-    #;(vicare language-extensions syntaxes))
+    (vicare arguments validation))
 
 
 ;;;; arguments validation

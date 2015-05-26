@@ -8,7 +8,7 @@
 	This file bridges C++ from  CityHash with C language.  This file
 	can be considered a C language wrapper for the C++ functions.
 
-  Copyright (C) 2012, 2013 Marco Maggi <marco.maggi-ipsu@poste.it>
+  Copyright (C) 2012, 2013, 2015 Marco Maggi <marco.maggi-ipsu@poste.it>
 
   This program is  free software: you can redistribute  it and/or modify
   it under the  terms of the GNU General Public  License as published by
@@ -32,7 +32,7 @@
 #ifdef HAVE_CONFIG_H
 #  include <config.h>
 #endif
-#include <cch.h>
+#include "cch.h"
 #include <city.h>
 #include <stdio.h>
 #include <stdlib.h>

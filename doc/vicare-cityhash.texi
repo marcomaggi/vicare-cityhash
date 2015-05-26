@@ -37,18 +37,19 @@
 
 @c To be used as @value{COPYRIGHT_YEARS} whenever we need to include the
 @c list of copyright years.
-@set COPYRIGHT_YEARS            2012, 2013
+@set COPYRIGHT_YEARS            2012, 2013, 2015
 
 @c ------------------------------------------------------------
 
 @set FOREIGN_PACKAGE            @cityhash{}
-@set FOREIGN_VERSION            1.1.0
+@set FOREIGN_VERSION            1.1.1
 @set FOREIGN_URL                @url{http:/@//@/code.google.com/@/p/@/cityhash/}
 @set FOREIGN_SCHEME_LIB         @library{vicare crypto cityhash}
 @set GITHUB_URL                 @url{http://github.com/marcomaggi/vicare-cityhash}
-@set SOURCEFORGE_URL            @url{https://sourceforge.net/projects/vicare-cityhash/}
-@set DOWNLOAD_URL               @url{https://sourceforge.net/projects/vicare-cityhash/files/}
-@set DOCUMENTATION_URL          @url{http://marcomaggi.github.com/docs/vicare-cityhash.html}
+@set BITBUCKET_URL              @url{https://bitbucket.org/marcomaggi/vicare-cityhash}
+@set DOWNLOAD_URL               @url{https://bitbucket.org/marcomaggi/vicare-cityhash/downloads}
+@set DOCUMENTATION_URL          @url{http://marcomaggi.github.io/docs/vicare-cityhash.html}
+@set VICARE_HOMEPAGE_URL        @url{http://marcomaggi.github.io/vicare.html}
 
 @macro cityhash{}
 CityHash
@@ -79,7 +80,7 @@ development takes place at:
 @noindent
 and as backup at:
 
-@center @value{SOURCEFORGE_URL}
+@center @value{BITBUCKET_URL}
 
 @noindent
 @value{FOREIGN_PACKAGE} is available at:
@@ -218,25 +219,6 @@ defined by the @command{configure} script, expanding to @true{} or
 @false{}.
 @end table
 
-Scheme libraries are installed under the directory:
-
-@center @file{$(libdir)/vicare-scheme}
-
-After installation, under the directory:
-
-@center @file{$(libexecdir)/@value{PACKAGE_NICKNAME}}
-
-@noindent
-a script @file{compile-all.sps} can be executed to precompile the
-installed libraries; for example:
-
-@example
-$ sudo vicare \
-   --fasl-directory /var/cache/vicare-scheme \
-   --compile-dependencies \
-      /usr/local/libexec/vicare-cityhash/compile-all.sps
-@end example
-
 This document contains only a brief description of the functions: refer
 to the @value{FOREIGN_PACKAGE}'s documentation for details.
 
@@ -350,12 +332,12 @@ development takes place at:
 @noindent
 and as backup at:
 
-@center @value{SOURCEFORGE_URL}
+@center @value{BITBUCKET_URL}
 
 @noindent
 the home page of the Vicare project is at:
 
-@center @url{http://marcomaggi.github.com/vicare.html}
+@center @value{VICARE_HOMEPAGE_URL}
 
 @noindent
 @value{FOREIGN_PACKAGE} can be found here:
