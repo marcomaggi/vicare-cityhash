@@ -43,19 +43,13 @@
 	    capi.)
     (vicare unsafe operations)
     (prefix (vicare platform words)
-	    words.)
-    (vicare arguments validation))
+	    words.))
 
 
 ;;;; arguments validation
 
-(define-argument-validation (false/length who obj)
-  (or (not obj) (and (fixnum? obj) ($fx<= 0 obj)))
-  (assertion-violation who "expected false or non-negative fixnum as argument" obj))
-
-(define-argument-validation (pointer/bytevector who obj)
-  (or (pointer? obj) (bytevector? obj))
-  (assertion-violation who "expected pointer or bytevector as argument" obj))
+(define (false-or-length? obj)
+  (or (not obj) (and (fixnum? obj) ($fx<= 0 obj))))
 
 
 ;;;; helpers
@@ -87,85 +81,58 @@
 
 ;;;; hash functions 64-bit
 
-(define CityHash64
-  (case-lambda
-   ((buf)
-    (define who 'CityHash64)
-    (with-arguments-validation (who)
-	((bytevector	buf))
-      (capi.cityhash64 buf #f)))
-   ((buf len)
-    (define who 'CityHash64)
-    (with-arguments-validation (who)
-	((pointer/bytevector	buf)
-	 (false/length		len))
-      (when (pointer? buf)
-	(assert (fixnum? len)))
-      (capi.cityhash64 buf len)))
-   ((buf len seed)
-    (define who 'CityHash64)
-    (with-arguments-validation (who)
-	((pointer/bytevector	buf)
-	 (false/length		len)
-	 (word-u64		seed))
-      (when (pointer? buf)
-	(assert (fixnum? len)))
-      (capi.cityhash64-with-seed buf len seed)))
-   ((buf len seed0 seed1)
-    (define who 'CityHash64)
-    (with-arguments-validation (who)
-	((pointer/bytevector	buf)
-	 (false/length		len)
-	 (word-u64		seed0)
-	 (word-u64		seed1))
-      (when (pointer? buf)
-	(assert (fixnum? len)))
-      (capi.cityhash64-with-seeds buf len seed0 seed1)))))
+(case-define* CityHash64
+  (({buf bytevector?})
+   (capi.cityhash64 buf #f))
+
+  (({buf (or pointer? bytevector?)} {len false-or-length?})
+   (when (pointer? buf)
+     (assert (fixnum? len)))
+   (capi.cityhash64 buf len))
+
+  (({buf (or pointer? bytevector?)} {len false-or-length?} {seed words.word-u64?})
+   (when (pointer? buf)
+     (assert (fixnum? len)))
+   (capi.cityhash64-with-seed buf len seed))
+
+  (({buf (or pointer? bytevector?)} {len false-or-length?} {seed0 words.word-u64?} {seed1 words.word-u64?})
+   (when (pointer? buf)
+     (assert (fixnum? len)))
+   (capi.cityhash64-with-seeds buf len seed0 seed1)))
 
 
 ;;;; hash functions 128-bit
 
-(define CityHash128
-  (case-lambda
-   ((buf)
-    (CityHash128 buf #f))
-   ((buf len)
-    (define who 'CityHash128)
-    (with-arguments-validation (who)
-	((pointer/bytevector	buf)
-	 (false/length		len))
-      (when (pointer? buf)
-	(assert (fixnum? len)))
-      (let* ((rv (capi.cityhash128 buf len))
-	     (lo (car rv))
-	     (hi (cdr rv)))
-	(bitwise-ior lo (bitwise-arithmetic-shift-left hi 64)))))
-   ((buf len seed)
-    (define who 'CityHash128)
-    (with-arguments-validation (who)
-	((pointer/bytevector	buf)
-	 (false/length		len)
-         (word-u128		seed))
-      (when (pointer? buf)
-	(assert (fixnum? len)))
-      (let* ((seed-low	(bitwise-and seed #xFFFFFFFFFFFFFFFF))
-	     (seed-high	(bitwise-and (bitwise-arithmetic-shift-right seed 64) #xFFFFFFFFFFFFFFFF))
-	     (rv	(capi.cityhash128-with-seed buf len seed-low seed-high))
-	     (lo	(car rv))
-	     (hi	(cdr rv)))
-	(bitwise-ior lo (bitwise-arithmetic-shift-left hi 64)))))))
+(case-define* CityHash128
+  ((buf)
+   (CityHash128 buf #f))
 
-(define (Hash128to64 hash)
-  (define who 'Hash128to64)
-  (with-arguments-validation (who)
-      ((word-u128	hash))
-    (let ((lo	(bitwise-and hash #xFFFFFFFFFFFFFFFF))
-	  (hi	(bitwise-and (bitwise-arithmetic-shift-right hash 64) #xFFFFFFFFFFFFFFFF)))
-      (capi.cityhash-128-to-64 lo hi))))
+  (({buf (or pointer? bytevector?)} {len false-or-length?})
+   (when (pointer? buf)
+     (assert (fixnum? len)))
+   (let* ((rv (capi.cityhash128 buf len))
+	  (lo (car rv))
+	  (hi (cdr rv)))
+     (bitwise-ior lo (bitwise-arithmetic-shift-left hi 64))))
+
+  (({buf (or pointer? bytevector?)} {len false-or-length?} {seed words.word-u128?})
+   (when (pointer? buf)
+     (assert (fixnum? len)))
+   (let* ((seed-low	(bitwise-and seed #xFFFFFFFFFFFFFFFF))
+	  (seed-high	(bitwise-and (bitwise-arithmetic-shift-right seed 64) #xFFFFFFFFFFFFFFFF))
+	  (rv	(capi.cityhash128-with-seed buf len seed-low seed-high))
+	  (lo	(car rv))
+	  (hi	(cdr rv)))
+     (bitwise-ior lo (bitwise-arithmetic-shift-left hi 64)))))
+
+(define* (Hash128to64 {hash words.word-u128?})
+  (let ((lo	(bitwise-and hash #xFFFFFFFFFFFFFFFF))
+	(hi	(bitwise-and (bitwise-arithmetic-shift-right hash 64) #xFFFFFFFFFFFFFFFF)))
+    (capi.cityhash-128-to-64 lo hi)))
 
 
 ;;;; done
 
-)
+#| end of library |# )
 
 ;;; end of file

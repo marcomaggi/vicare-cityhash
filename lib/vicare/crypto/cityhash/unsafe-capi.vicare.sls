@@ -8,7 +8,7 @@
 ;;;
 ;;;
 ;;;
-;;;Copyright (C) 2013 Marco Maggi <marco.maggi-ipsu@poste.it>
+;;;Copyright (C) 2013, 2015 Marco Maggi <marco.maggi-ipsu@poste.it>
 ;;;
 ;;;This program is free software:  you can redistribute it and/or modify
 ;;;it under the terms of the  GNU General Public License as published by
@@ -48,39 +48,39 @@
 
 ;;;; version functions
 
-(define-inline (vicare-cityhash-version-interface-current)
+(define-syntax-rule (vicare-cityhash-version-interface-current)
   (foreign-call "ikrt_cityhash_version_interface_current"))
 
-(define-inline (vicare-cityhash-version-interface-revision)
+(define-syntax-rule (vicare-cityhash-version-interface-revision)
   (foreign-call "ikrt_cityhash_version_interface_revision"))
 
-(define-inline (vicare-cityhash-version-interface-age)
+(define-syntax-rule (vicare-cityhash-version-interface-age)
   (foreign-call "ikrt_cityhash_version_interface_age"))
 
-(define-inline (vicare-cityhash-version)
+(define-syntax-rule (vicare-cityhash-version)
   (ascii->string (foreign-call "ikrt_cityhash_version")))
 
 
 ;;;; hash functions
 
-(define-inline (cityhash64 buf len)
+(define-syntax-rule (cityhash64 buf len)
   (foreign-call "ikrt_cityhash_cityhash64" buf len))
 
-(define-inline (cityhash64-with-seed buf len seed)
+(define-syntax-rule (cityhash64-with-seed buf len seed)
   (foreign-call "ikrt_cityhash_cityhash64_with_seed" buf len seed))
 
-(define-inline (cityhash64-with-seeds buf len seed0 seed1)
+(define-syntax-rule (cityhash64-with-seeds buf len seed0 seed1)
   (foreign-call "ikrt_cityhash_cityhash64_with_seeds" buf len seed0 seed1))
 
 ;;; --------------------------------------------------------------------
 
-(define-inline (cityhash128 buf len)
+(define-syntax-rule (cityhash128 buf len)
   (foreign-call "ikrt_cityhash_cityhash128" buf len))
 
-(define-inline (cityhash128-with-seed buf len seed-low seed-high)
+(define-syntax-rule (cityhash128-with-seed buf len seed-low seed-high)
   (foreign-call "ikrt_cityhash_cityhash128_with_seed" buf len seed-low seed-high))
 
-(define-inline (cityhash-128-to-64 hash-low hash-high)
+(define-syntax-rule (cityhash-128-to-64 hash-low hash-high)
   (foreign-call "ikrt_cityhash_hash128to64" hash-low hash-high))
 
 
