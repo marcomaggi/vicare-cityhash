@@ -8,6 +8,7 @@ slsdir			= $(srcdir)/lib
 fasldir			= $(builddir)/lib
 testdir			= $(srcdir)/tests
 bundledlibsdir		= $(libdir)/vicare-scheme
+scriptsdir		= $(srcdir)/meta/scripts
 
 CLEANFILES		=
 MAINTAINERCLEANFILES	=
@@ -69,7 +70,7 @@ noinst_PROGRAMS		= features
 features_SOURCES	= lib/features.c
 
 lib/vicare/crypto/cityhash/features.vicare.sls : features
-	$(MKDIR_P) lib/vicare/crypto && ./features >$@
+	$(MKDIR_P) lib/vicare/crypto/cityhash && ./features >$@
 
 ## --------------------------------------------------------------------
 
@@ -80,7 +81,7 @@ EXTRA_DIST += \
 VICARE_BUILD_DEPS	= \
 	$(VICARE_COMPILE_RUN) \
 		--source-path $(testdir) --option print-loaded-libraries --library-locator source \
-		--r6rs-script $(srcdir)/meta/scripts/build-makefile-rules.sps --
+		--r6rs-script $(scriptsdir)/build-makefile-rules.sps --
 
 .PHONY: dependencies
 
@@ -215,7 +216,7 @@ demo demos:
 #page
 #### running vicare on the terminal from the build directory
 
-RLWRAP_TRAMPOLINE	= $(srcdir)/scripts/rlwrap-trampoline
+RLWRAP_TRAMPOLINE	= $(scriptsdir)/rlwrap-trampoline
 EXTRA_DIST		+= $(RLWRAP_TRAMPOLINE)
 
 VICARE_TERMINAL_LIBRARY_PATH	= $(fasldir):$(VICARE_LIBRARY_PATH)
