@@ -38,7 +38,9 @@
 
     ;; hash functions
     CityHash64 CityHash128 Hash128to64)
-  (import (vicare)
+  (import (vicare (or (0 4 2015 5 (>= 19))
+		      (0 4 2015 (>= 6))
+		      (0 4 (>= 2016))))
     (prefix (vicare crypto cityhash unsafe-capi)
 	    capi.)
     (vicare unsafe operations)
