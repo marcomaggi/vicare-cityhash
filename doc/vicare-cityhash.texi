@@ -37,7 +37,7 @@
 
 @c To be used as @value{COPYRIGHT_YEARS} whenever we need to include the
 @c list of copyright years.
-@set COPYRIGHT_YEARS            2012, 2013, 2015
+@set COPYRIGHT_YEARS            2012, 2013, 2015, 2017
 
 @c ------------------------------------------------------------
 
@@ -185,15 +185,15 @@ bindings for some @value{FOREIGN_PACKAGE} public functions.
 
 The following Scheme libraries are installed:
 
-@table @library
-@item vicare crypto cityhash
+@table @asis
+@item @library{vicare crypto cityhash}
 @cindex Library @library{vicare crypto cityhash}
 @cindex @library{vicare crypto cityhash}, library
 It exports syntactic bindings for some @value{FOREIGN_PACKAGE} public
 functions.  All the Scheme function names are equal to the C++ function
 names.
 
-@item vicare crypto cityhash unsafe-capi
+@item @library{vicare crypto cityhash unsafe-capi}
 @cindex Library @library{vicare crypto cityhash unsafe-capi}
 @cindex @library{vicare crypto cityhash unsafe-capi}, library
 It exports syntax bindings for some @value{FOREIGN_PACKAGE} public
@@ -204,7 +204,7 @@ These syntaxes expand to a direct call to the C language wrapper
 functions in the @value{PACKAGE} library; they are not meant to be
 called in normal usage of the package.
 
-@item vicare crypto cityhash features
+@item @library{vicare crypto cityhash features}
 @cindex Library @library{vicare crypto cityhash features}
 @cindex @library{vicare crypto cityhash features}, library
 It exports one identifier syntax binding for each @code{HAVE_} constant

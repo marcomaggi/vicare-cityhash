@@ -8,7 +8,7 @@
 ;;;
 ;;;
 ;;;
-;;;Copyright (C) 2012, 2013, 2015 Marco Maggi <marco.maggi-ipsu@poste.it>
+;;;Copyright (C) 2012, 2013, 2015, 2017 Marco Maggi <marco.maggi-ipsu@poste.it>
 ;;;
 ;;;This program is free software:  you can redistribute it and/or modify
 ;;;it under the terms of the  GNU General Public License as published by
@@ -27,6 +27,7 @@
 
 #!vicare
 (library (vicare crypto cityhash)
+  (options typed-language)
   (foreign-library "vicare-cityhash")
   (export
 
@@ -38,14 +39,13 @@
 
     ;; hash functions
     CityHash64 CityHash128 Hash128to64)
-  (import (vicare (or (0 4 2015 5 (>= 19))
-		      (0 4 2015 (>= 6))
-		      (0 4 (>= 2016))))
+  (import (vicare (0 4 2017 1 (>= 10)))
+    (prefix (vicare system structs) structs::)
     (prefix (vicare crypto cityhash unsafe-capi)
-	    capi.)
+	    capi::)
     (vicare unsafe operations)
     (prefix (vicare platform words)
-	    words.))
+	    words::))
 
 
 ;;;; arguments validation
@@ -69,38 +69,38 @@
 ;;;; version functions
 
 (define (vicare-cityhash-version-interface-current)
-  (capi.vicare-cityhash-version-interface-current))
+  (capi::vicare-cityhash-version-interface-current))
 
 (define (vicare-cityhash-version-interface-revision)
-  (capi.vicare-cityhash-version-interface-revision))
+  (capi::vicare-cityhash-version-interface-revision))
 
 (define (vicare-cityhash-version-interface-age)
-  (capi.vicare-cityhash-version-interface-age))
+  (capi::vicare-cityhash-version-interface-age))
 
 (define (vicare-cityhash-version)
-  (capi.vicare-cityhash-version))
+  (capi::vicare-cityhash-version))
 
 
 ;;;; hash functions 64-bit
 
 (case-define* CityHash64
   (({buf bytevector?})
-   (capi.cityhash64 buf #f))
+   (capi::cityhash64 buf #f))
 
   (({buf (or pointer? bytevector?)} {len false-or-length?})
    (when (pointer? buf)
      (assert (fixnum? len)))
-   (capi.cityhash64 buf len))
+   (capi::cityhash64 buf len))
 
-  (({buf (or pointer? bytevector?)} {len false-or-length?} {seed words.word-u64?})
+  (({buf (or pointer? bytevector?)} {len false-or-length?} {seed words::word-u64?})
    (when (pointer? buf)
      (assert (fixnum? len)))
-   (capi.cityhash64-with-seed buf len seed))
+   (capi::cityhash64-with-seed buf len seed))
 
-  (({buf (or pointer? bytevector?)} {len false-or-length?} {seed0 words.word-u64?} {seed1 words.word-u64?})
+  (({buf (or pointer? bytevector?)} {len false-or-length?} {seed0 words::word-u64?} {seed1 words::word-u64?})
    (when (pointer? buf)
      (assert (fixnum? len)))
-   (capi.cityhash64-with-seeds buf len seed0 seed1)))
+   (capi::cityhash64-with-seeds buf len seed0 seed1)))
 
 
 ;;;; hash functions 128-bit
@@ -112,25 +112,25 @@
   (({buf (or pointer? bytevector?)} {len false-or-length?})
    (when (pointer? buf)
      (assert (fixnum? len)))
-   (let* ((rv (capi.cityhash128 buf len))
+   (let* ((rv (capi::cityhash128 buf len))
 	  (lo (car rv))
 	  (hi (cdr rv)))
      (bitwise-ior lo (bitwise-arithmetic-shift-left hi 64))))
 
-  (({buf (or pointer? bytevector?)} {len false-or-length?} {seed words.word-u128?})
+  (({buf (or pointer? bytevector?)} {len false-or-length?} {seed words::word-u128?})
    (when (pointer? buf)
      (assert (fixnum? len)))
    (let* ((seed-low	(bitwise-and seed #xFFFFFFFFFFFFFFFF))
 	  (seed-high	(bitwise-and (bitwise-arithmetic-shift-right seed 64) #xFFFFFFFFFFFFFFFF))
-	  (rv	(capi.cityhash128-with-seed buf len seed-low seed-high))
+	  (rv	(capi::cityhash128-with-seed buf len seed-low seed-high))
 	  (lo	(car rv))
 	  (hi	(cdr rv)))
      (bitwise-ior lo (bitwise-arithmetic-shift-left hi 64)))))
 
-(define* (Hash128to64 {hash words.word-u128?})
+(define* (Hash128to64 {hash words::word-u128?})
   (let ((lo	(bitwise-and hash #xFFFFFFFFFFFFFFFF))
 	(hi	(bitwise-and (bitwise-arithmetic-shift-right hash 64) #xFFFFFFFFFFFFFFFF)))
-    (capi.cityhash-128-to-64 lo hi)))
+    (capi::cityhash-128-to-64 lo hi)))
 
 
 ;;;; done

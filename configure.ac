@@ -2,7 +2,7 @@ dnl @configure_input@
 dnl
 
 AC_PREREQ([2.68])
-AC_INIT([Vicare/CityHash],[3.0d0],[marco.maggi-ipsu@poste.it],
+AC_INIT([Vicare/CityHash],[0.4d1],[marco.maggi-ipsu@poste.it],
   [vicare-cityhash],[http://marcomaggi.github.com/vicare.html])
 AC_CONFIG_SRCDIR([src])
 AC_CONFIG_MACRO_DIR([meta/autotools])
@@ -26,10 +26,7 @@ LT_PREREQ([2.4])
 LT_INIT([shared disable-static])
 
 VICARE_SCHEME
-VICARE_CHECK_LIBRARY([VICARE],
-  [(vicare (or (0 4 2015 5 (>= 19))
-               (0 4 2015 (>= 6))
-               (0 4 (>= 2016))))])
+VICARE_CHECK_LIBRARY([VICARE],[(vicare (0 4 2017 1 (>= 10)))])
 AS_IF([test "$vicare_cv_schemelib_VICARE" = no],
   [AC_MSG_ERROR([wrong Vicare version],1)])
 

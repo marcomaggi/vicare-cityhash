@@ -1,4 +1,4 @@
-Subject: [announce] Vicare/CityHash revision 3.0d0
+Subject: [announce] Vicare/CityHash revision 0.4d1
 
 			    Vicare/CityHash
 			    ===============
@@ -32,6 +32,14 @@ and as backup at:
 tested CityHash version 1.1.1; the CityHash library is available at:
 
 		  <http://code.google.com/p/cityhash/>
+
+
+Notes for revision 0.4d1
+------------------------
+
+* Jump back of version number to harmonise it with Vicare Scheme.
+
+* Ensure compatibility with Vicare Scheme 0.4d1.
 
 
 Notes for revision 3.0d0
